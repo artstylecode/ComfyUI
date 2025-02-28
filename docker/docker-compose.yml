@@ -1,0 +1,29 @@
+services:
+  models:
+    image: registry.cn-shenzhen.aliyuncs.com/artcoding/comfyui-models:0.1
+    tty: true
+    volumes:
+      - models-data:/home/app/models
+  comfyui:
+    # build:
+    #   context: .
+    #   dockerfile: dockerfile
+    image: artcoding/comfyui:0.3.18-ubuntu
+    tty: true
+    restart: always
+    volumes:
+      - models-data:/home/app/comfyui/models
+    ports:
+      - "8881:8881"
+    command: python /home/app/comfyui/main.py --listen 0.0.0.0
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: "all"
+            capabilities: [gpu]
+
+  volumes:
+    models-data:
+      
