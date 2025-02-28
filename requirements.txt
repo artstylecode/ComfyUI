@@ -21,3 +21,6 @@ kornia>=0.7.1
 spandrel
 soundfile
 av
+opencv-python
+insightface
+onnxruntime-gpu
